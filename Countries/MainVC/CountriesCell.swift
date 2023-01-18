@@ -20,9 +20,6 @@ class CountriesCell: UITableViewCell {
         imgFlag.layer.borderWidth = 0.5
         imgFlag.layer.borderColor = UIColor.gray.cgColor
         
-      
-        
-             
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

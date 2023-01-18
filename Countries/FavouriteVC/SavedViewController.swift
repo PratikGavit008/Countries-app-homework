@@ -19,7 +19,7 @@ class SavedViewController: UIViewController {
         tableView.dataSource = self
         getDataFromDefault()
         print(DefaultDataCheck.count)
-        getCountryList()
+//        getCountryList()
     }
     override func viewWillAppear(_ animated: Bool) {
         getDataFromDefault()
