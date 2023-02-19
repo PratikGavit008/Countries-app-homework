@@ -14,12 +14,13 @@ class CountriesCell: UITableViewCell {
     @IBOutlet weak var lblCountryDetail: UILabel!
     @IBOutlet weak var lblCapital: UILabel!
     @IBOutlet weak var imgView: UIView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         imgFlag.layer.masksToBounds = true
         imgFlag.layer.borderWidth = 0.5
-        imgFlag.layer.borderColor = UIColor.gray.cgColor
-        
+        imgFlag.layer.borderColor = UIColor.gray.cgColor   
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

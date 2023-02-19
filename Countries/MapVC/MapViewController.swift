@@ -10,7 +10,7 @@ import MapKit
 
 class MapViewController: UIViewController {
     var MapDetails: DetailsModel?
-    var temp:MKCoordinateRegion?
+    var regionData:MKCoordinateRegion?
     @IBOutlet weak var imgFlag: UIImageView!
     @IBOutlet weak var lblCountryName: UILabel!
     @IBOutlet weak var mapView: MKMapView!
@@ -48,10 +48,9 @@ class MapViewController: UIViewController {
     }
  
     func SetRegion(){
-        mapView.setRegion(temp!, animated: true)
+        mapView.setRegion(regionData!, animated: true)
     }
-    
-    
+
     func getCountry(name:String)  {
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = name
@@ -60,21 +59,18 @@ class MapViewController: UIViewController {
         
         search.start { response, error in
             if let response = response{
-                print(response)
+                print(response.boundingRegion)
                 DispatchQueue.main.async {
-                    self.temp = response.boundingRegion
+                    self.regionData = response.boundingRegion
                     self.SetRegion()
                 }
-
+                
             } else {
                 print("Error: \(error?.localizedDescription ?? "Unknown error").")
             }
         }
     }
 }
-
-
-
 
 //----- for further Use 👇
 
@@ -87,3 +83,4 @@ class MapViewController: UIViewController {
     
 //}
 
+ 

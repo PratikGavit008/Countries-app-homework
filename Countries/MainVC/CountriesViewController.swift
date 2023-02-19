@@ -37,20 +37,27 @@ class CountriesViewController: UIViewController {
     func loadTable(){
         ApiManager.shared.getCountriesList { responce in
             switch responce{
-                
             case .success(let countries):
-                print(countries)
-                DispatchQueue.main.async {
+                DispatchQueue.global(qos: .userInitiated).sync {
                     let sorted = countries.sorted(by: { ($0.name?.common)! < ($1.name?.common)! })
                     self.countries.append(contentsOf: sorted)
+                    print(self.countries.count)
+                }
+                print("Started")
+                DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
+                print("Ended")
+//                DispatchQueue.global(qos: .userInteractive).async {
+//                    self.tableView.reloadData()
+//                }
                 
             case .failure(let err):
                 print(err)
             }
         }
     }
+
 }
 
 extension CountriesViewController:UITableViewDelegate,UITableViewDataSource{
@@ -66,17 +73,57 @@ extension CountriesViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CountriesCell
         else { fatalError() }
-        
+        let processor = DownsamplingImageProcessor(size: cell.imgFlag.bounds.size)
+
         if searching {
             
-            cell.imgFlag.kf.setImage(with: URL(string: filterArr[indexPath.row].flags?.png ?? "") )
+            cell.imgFlag.kf.setImage(
+                with: URL(string: filterArr[indexPath.row].flags?.png ?? ""),
+                placeholder: UIImage(systemName: "ticket"),
+                options: [
+                    
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    
+                ])
+            {
+                result in
+                switch result {
+                case .success(let value):
+                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+                case .failure(let error):
+                    print("Job failed: \(error.localizedDescription)")
+                }
+            }
+            
+            cell.imgFlag.kf.indicatorType = .activity
+            //            cell.imgFlag.kf.setImage(with: URL(string: filterArr[indexPath.row].flags?.png ?? "") )
             cell.lblCountryName.text = filterArr[indexPath.row].name?.common
             cell.lblCountryDetail.text = filterArr[indexPath.row].name?.official
             cell.lblCapital.text = filterArr[indexPath.row].capital?.first
         }
         else {
             
-            cell.imgFlag.kf.setImage(with: URL(string: countries[indexPath.row].flags?.png ?? ""))
+            cell.imgFlag.kf.setImage(
+                with: URL(string: countries[indexPath.row].flags?.png ?? ""),
+                placeholder: UIImage(systemName: "ticket"),
+                options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+
+                ])
+            {
+                result in
+                switch result {
+                case .success(let value):
+                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+                case .failure(let error):
+                    print("Job failed: \(error.localizedDescription)")
+                }
+            }
+         
             cell.lblCountryName.text = countries[indexPath.row].name?.common
             cell.lblCountryDetail.text = countries[indexPath.row].name?.official
             cell.lblCapital.text = countries[indexPath.row].capital?.first

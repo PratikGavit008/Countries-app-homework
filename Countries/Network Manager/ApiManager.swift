@@ -14,8 +14,6 @@ enum DataError :Error {
     case networkError(_ error:Error?)
 }
 
-
-
 final class ApiManager{
     static let shared = ApiManager()
     private init() {}
@@ -40,7 +38,6 @@ final class ApiManager{
             } catch {
                 Completion(.failure(.networkError(error)))
             }
-            
         }.resume()
     }
 }

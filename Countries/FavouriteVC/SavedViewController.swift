@@ -9,42 +9,28 @@ import UIKit
 
 
 class SavedViewController: UIViewController {
-    var DefaultDataCheck:[String] = []
     var SavedCountries:[DetailsModel] = []
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.delegate = self
         tableView.dataSource = self
-        getDataFromDefault()
-        print(DefaultDataCheck.count)
-//        getCountryList()
+       
     }
     override func viewWillAppear(_ animated: Bool) {
-        getDataFromDefault()
+        getCountryList()
     }
-    func getDataFromDefault(){
+    func getDataFromDefault()->String{
         let defaults = UserDefaults.standard
-        if let stringOne = defaults.object(forKey: DefaultsKeys.keyOne) as? [String] {
-            DefaultDataCheck.append(contentsOf: stringOne)
-        }
+       let country = defaults.value(forKey: "country") as! String
+        return country
     }
     
-//    func getDatafromLocal(){
-//        let defaults = UserDefaults.standard
-//        if let stringOne = defaults.object(forKey: DefaultsKeys.keyOne) {
-//            print("ergvdf",stringOne)
-//            // Some String Value
-//        }
-//        if let stringTwo = defaults.string(forKey: DefaultsKeys.keyTwo) {
-//            print("dfhjdfgjhfgdjh",stringTwo) // Another String Value
-//        }
-//    }
     func getCountryList(){
-        for i in 0...DefaultDataCheck.count - 1{
-            getCountry(country: DefaultDataCheck[i])
-        }
+        getCountry(country: getDataFromDefault())
+        
     }
     
     
@@ -63,11 +49,9 @@ class SavedViewController: UIViewController {
                     print(data)
                     DispatchQueue.main.async {
                         if let decodedData = decodedData {
-                            self.SavedCountries = decodedData
+                            self.SavedCountries.append(contentsOf: decodedData)
+                            print(self.SavedCountries)
                             self.tableView.reloadData()
-                            
-                            //                        self.updateUI()
-                            //                        self.passToTabBar()
                         }
                     }
                     
@@ -87,6 +71,7 @@ extension SavedViewController:UITableViewDelegate,UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FavouriteCountriesCell
         else { fatalError() }
         cell.imgFlag.kf.setImage(with:URL(string: SavedCountries[indexPath.row].flags?.png ?? "") )
+        cell.lblCountryName.text = SavedCountries[indexPath.row].name?.common
         return cell
     }
 }

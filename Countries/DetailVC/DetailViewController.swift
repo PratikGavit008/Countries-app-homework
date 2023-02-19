@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailViewController: UIViewController {
     var DetailCountries: DetailsModel?
@@ -71,8 +72,9 @@ class DetailViewController: UIViewController {
         lblLangDesc.text = "\(DetailCountries?.languages?.eng ?? "")" + "" + "\(DetailCountries?.languages?.smo ?? "")"
         lblCurrenciesDesc.text = "\(DetailCountries?.currencies?.uSD?.name ?? "")" + "" + "\(DetailCountries?.currencies?.uSD?.symbol ?? "")"
         lblCarSideDesc.text = DetailCountries?.car?.side
-        
+        imgFlag.kf.indicatorType = .activity
         imgFlag.kf.setImage(with: URL(string: DetailCountries?.flags?.png ?? ""))
+        imgCoatOfArms.kf.indicatorType = .activity
         imgCoatOfArms.kf.setImage(with: URL(string: DetailCountries?.coatOfArms?.png ?? ""))
         
     }
@@ -111,9 +113,6 @@ class DetailViewController: UIViewController {
 func addCornerRad(view:UIView){
     view.layer.cornerRadius = 10;
     view.layer.masksToBounds = true;
-    
-
-   
     view.layer.contentsScale = UIScreen.main.scale;
     view.layer.shadowColor = UIColor.black.cgColor;
     view.layer.shadowOffset = CGSize(width: 0, height: 5)
