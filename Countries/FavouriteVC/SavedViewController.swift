@@ -24,8 +24,10 @@ class SavedViewController: UIViewController {
     }
     func getDataFromDefault()->String{
         let defaults = UserDefaults.standard
-       let country = defaults.value(forKey: "country") as! String
-        return country
+        if let country = defaults.value(forKey: "country") as? String{
+            return country
+        }
+        return ""
     }
     
     func getCountryList(){

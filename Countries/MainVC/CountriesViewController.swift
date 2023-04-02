@@ -52,9 +52,9 @@ class CountriesViewController: UIViewController {
         }
     
     func loadTable(){
-        let loader = loader()
+        self.view.startActivityIndicator()
         ApiManager.shared.getCountriesList { responce in
-            stopLoader(loader: loader)
+            self.view.stopActivityIndicator()
             switch responce{
             case .success(let countries):
                 DispatchQueue.global(qos: .userInitiated).sync {
