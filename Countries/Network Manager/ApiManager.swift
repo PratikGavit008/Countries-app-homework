@@ -2,7 +2,7 @@
 //  ApiManager.swift
 //  Countries
 //
-//  Created by Tushar Sonawane on 18/01/23.
+//  Created by Pratik Gavit on 18/01/23.
 //
 
 import Foundation

@@ -81,7 +81,7 @@ class DetailViewController: UIViewController {
     
     
     
-    func getCountry(){
+    func getCountry() {
         let temp = countryName.components(separatedBy: .whitespaces).first!
         guard let url = URL(string: "https://restcountries.com/v3.1/name/\(temp)") else {return}
         

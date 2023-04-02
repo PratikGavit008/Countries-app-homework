@@ -172,10 +172,10 @@
 		E9F0A7ED29578BDF00EFC472 /* MainVC */ = {
 			isa = PBXGroup;
 			children = (
+				E978934F2956F77C00B81153 /* Main.storyboard */,
 				E978934D2956F77C00B81153 /* CountriesViewController.swift */,
 				E94A8263295709270098752A /* CountriesCell.swift */,
 				E9936CB029584A5300DF8E18 /* MainTabBarController.swift */,
-				E978934F2956F77C00B81153 /* Main.storyboard */,
 			);
 			path = MainVC;
 			sourceTree = "<group>";
