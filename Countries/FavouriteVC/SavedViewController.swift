@@ -8,7 +8,8 @@
 import UIKit
 
 
-class SavedViewController: UIViewController {
+class SavedViewController: UIViewController, Storyboarded {
+    weak var coordinator: SavedViewCoordinatorDelegate?
     var DefaultDataCheck:[String] = []
     var SavedCountries:[DetailsModel] = []
     

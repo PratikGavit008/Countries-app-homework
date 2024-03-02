@@ -8,8 +8,9 @@
 import UIKit
 import Kingfisher
 
-class CountriesViewController: UIViewController {
+class CountriesViewController: UIViewController, Storyboarded {
     
+    weak var coordinator: CountriesViewCoordinatorDelegate?
     var countries: [CountryModel] = []
     var searching = false
     var filterArr: [CountryModel] = []
